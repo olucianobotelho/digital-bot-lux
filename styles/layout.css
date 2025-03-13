@@ -1,0 +1,227 @@
+/* Layout Styles */
+body {
+    background-color: #FFFFFF;
+    font-family: 'Press Start 2P', cursive;
+    color: #333;
+    overflow-x: hidden;
+    padding-top: 0; /* Removido o padding-top que era usado para o header */
+}
+
+/* Garantindo que todos os elementos principais tenham fundo branco */
+body, .hero-banner, .section, main, .pricing-section {
+    background-color: #FFFFFF;
+}
+
+.container {
+    max-width: 1200px;
+    margin: 0 auto;
+    padding: 20px;
+    position: relative;
+}
+
+/* Section Layout */
+.section {
+    padding: 40px 20px;
+    margin: 30px 0;
+    position: relative;
+}
+
+.section:before {
+    content: '';
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 10px;
+    background: repeating-linear-gradient(
+        to right,
+        #E52521, /* Vermelho do Mario */
+        #E52521 30px,
+        #FBD000 30px, /* Amarelo da moeda do Mario */
+        #FBD000 60px
+    );
+}
+
+.section-title {
+    font-size: 2rem;
+    text-align: center;
+    margin-bottom: 30px;
+    position: relative;
+    padding-bottom: 15px;
+    text-transform: uppercase;
+    color: #E52521;
+    text-shadow: 3px 3px 0 #000;
+    font-family: 'Press Start 2P', cursive;
+}
+
+.section-title:after {
+    content: '';
+    position: absolute;
+    bottom: 0;
+    left: 50%;
+    transform: translateX(-50%);
+    width: 100px;
+    height: 5px;
+    background-color: #4CAF50; /* Verde do tubo do Mario */
+}
+
+/* Hero Banner (sem o header) */
+.hero-banner {
+    position: relative;
+    height: 100vh;
+    min-height: 600px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    overflow: hidden;
+    background-color: #FFFFFF;
+    border-bottom: 10px solid #4CAF50; /* Verde do tubo do Mario */
+}
+
+.banner-image {
+    width: 100%;
+    height: 100%;
+    position: relative;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+}
+
+.banner-content {
+    text-align: center;
+    z-index: 2;
+    padding: 20px;
+    background-color: rgba(255, 255, 255, 0.8);
+    border: 4px solid #000;
+    border-radius: 0;
+    box-shadow: 10px 10px 0 #000;
+    max-width: 80%;
+}
+
+.banner-content h1 {
+    font-family: 'Press Start 2P', cursive;
+    font-size: 3rem;
+    color: #E52521; /* Vermelho do Mario */
+    margin-bottom: 20px;
+    text-shadow: 3px 3px 0 #000;
+    line-height: 1.3;
+}
+
+.banner-content p {
+    font-family: 'Press Start 2P', cursive;
+    font-size: 1rem;
+    margin-bottom: 30px;
+    color: #000;
+}
+
+/* Media queries para responsividade */
+@media (max-width: 768px) {
+    .banner-content h1 {
+        font-size: 2rem;
+    }
+    
+    .banner-content p {
+        font-size: 0.8rem;
+    }
+    
+    .section-title {
+        font-size: 1.5rem;
+    }
+}
+
+@media (max-width: 480px) {
+    .banner-content h1 {
+        font-size: 1.5rem;
+    }
+    
+    .banner-content {
+        max-width: 90%;
+    }
+    
+    .section {
+        padding: 30px 15px;
+    }
+}
+
+/* About Content */
+.about-content {
+    display: grid;
+    grid-template-columns: 1fr;
+    gap: 40px;
+    max-width: 1200px;
+    margin: 0 auto;
+}
+
+@media (min-width: 768px) {
+    .about-content {
+        grid-template-columns: 1.5fr 1fr;
+        align-items: center;
+        gap: 60px;
+    }
+    
+    .about-image-container {
+        max-width: 350px; /* Reduce photo size on desktop */
+        justify-self: end;
+    }
+    
+    .about-image {
+        max-width: 100%;
+        height: auto;
+    }
+}
+
+/* WhatsApp Button */
+.whatsapp-float {
+    position: fixed;
+    bottom: 20px;
+    right: 20px;
+    z-index: 1000;
+}
+
+.whatsapp-float img {
+    width: 60px;
+    height: 60px;
+    transition: transform 0.3s ease;
+}
+
+.whatsapp-float img:hover {
+    transform: scale(1.1);
+}
+
+/* Responsive layout adjustments */
+@media (max-width: 768px) {
+    .whatsapp-float img {
+        width: 50px;
+        height: 50px;
+    }
+}
+
+@media (max-width: 480px) {
+    .whatsapp-float img {
+        width: 50px;
+        height: 50px;
+    }
+}
+
+/* Garantindo que todos os textos usem a fonte arcade */
+h1, h2, h3, h4, h5, h6, p, a, span, li, button, input, textarea, label {
+    font-family: 'Press Start 2P', cursive;
+}
+
+/* Ajustando tamanhos de fonte para melhor legibilidade */
+p, li {
+    font-size: 0.7rem;
+    line-height: 1.5;
+}
+
+h3 {
+    font-size: 1rem;
+    line-height: 1.5;
+}
+
+.section-subtitle {
+    font-family: 'Press Start 2P', cursive;
+    font-size: 0.8rem;
+    text-align: center;
+    margin-bottom: 30px;
+}

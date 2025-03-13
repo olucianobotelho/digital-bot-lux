@@ -1,0 +1,330 @@
+/* Button Styles */
+.cta-btn, .whatsapp-btn {
+    display: inline-block;
+    padding: 12px 25px;
+    background-color: #E52521; /* Vermelho do Mario */
+    color: white;
+    text-decoration: none;
+    border-radius: 8px;
+    font-weight: bold;
+    transition: background-color 0.3s ease;
+    border: 4px solid #000;
+    font-family: 'Press Start 2P', cursive;
+    font-size: 0.8rem;
+    text-transform: uppercase;
+    margin: 15px auto;
+    width: 280px;
+    text-align: center;
+    position: relative;
+    overflow: hidden;
+    box-shadow: 4px 4px 0 #000;
+}
+
+.cta-btn:hover, .whatsapp-btn:hover {
+    transform: translateY(-3px);
+    box-shadow: 6px 6px 0 #000;
+    background-color: #FF7B00; /* Laranja como no bloco de interrogação */
+}
+
+/* Game-style START Button */
+.game-start-container {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    margin: 30px 0;
+    position: relative;
+}
+
+.press-start-animation {
+    font-family: 'Press Start 2P', cursive;
+    color: #E52521;
+    font-size: 1.2rem;
+    margin-bottom: 15px;
+    animation: blink 1s infinite;
+    text-shadow: 2px 2px 0 #333;
+}
+
+@keyframes blink {
+    0%, 49% { opacity: 1; }
+    50%, 100% { opacity: 0; }
+}
+
+.start-btn {
+    display: inline-block;
+    padding: 15px 40px;
+    background-color: #4CAF50; /* Verde do tubo do Mario */
+    color: white;
+    text-decoration: none;
+    border-radius: 0px;
+    font-weight: bold;
+    border: 4px solid #000;
+    font-family: 'Press Start 2P', cursive;
+    font-size: 1.5rem;
+    text-transform: uppercase;
+    margin: 10px auto;
+    text-align: center;
+    box-shadow: 0 8px 0 #000;
+    position: relative;
+    transition: all 0.2s ease;
+    z-index: 2;
+    overflow: hidden;
+    animation: pulse 1.5s infinite alternate;
+}
+
+@keyframes pulse {
+    0% {
+        transform: scale(1);
+        box-shadow: 0 8px 0 #000;
+    }
+    50% {
+        transform: scale(1.05);
+        box-shadow: 0 12px 0 #000;
+    }
+    100% {
+        transform: scale(1);
+        box-shadow: 0 8px 0 #000;
+    }
+}
+
+.start-btn:hover {
+    transform: translateY(-5px);
+    box-shadow: 0 13px 0 #000;
+    background-color: #5EBD61; /* Verde mais claro */
+    animation: none;
+}
+
+.start-btn:active {
+    transform: translateY(5px);
+    box-shadow: 0 3px 0 #000;
+}
+
+.start-btn::after, .cta-btn::after, .whatsapp-btn::after {
+    content: '';
+    position: absolute;
+    bottom: 0;
+    left: 0;
+    width: 100%;
+    height: 4px;
+    background: linear-gradient(90deg, #ff6b6b, #4caf50, #2196f3, #ff6b6b);
+    background-size: 300% 100%;
+    animation: gradient-shift 3s ease infinite;
+}
+
+@keyframes gradient-shift {
+    0% { background-position: 0% 50%; }
+    50% { background-position: 100% 50%; }
+    100% { background-position: 0% 50%; }
+}
+
+/* Game Controls */
+.game-controls {
+    display: flex;
+    justify-content: center;
+    margin-top: 30px;
+    gap: 40px;
+    position: relative;
+    z-index: 1;
+}
+
+.control-pad {
+    width: 80px;
+    height: 80px;
+    background-color: #333;
+    border-radius: 50%;
+    border: 4px solid #222;
+    box-shadow: 0 3px 6px rgba(0,0,0,0.3);
+    position: relative;
+    transition: all 0.2s ease;
+}
+
+.control-pad:hover {
+    transform: scale(1.1);
+    box-shadow: 0 5px 10px rgba(0,0,0,0.4);
+}
+
+.control-pad:active {
+    transform: scale(0.95);
+}
+
+.control-pad::before {
+    content: '';
+    position: absolute;
+    width: 40px;
+    height: 40px;
+    background-color: #444;
+    border-radius: 50%;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%);
+    box-shadow: inset 0 3px 6px rgba(0,0,0,0.5);
+}
+
+.control-arrows {
+    display: grid;
+    grid-template-columns: repeat(3, 30px);
+    grid-template-rows: repeat(3, 30px);
+    gap: 2px;
+}
+
+.arrow {
+    background-color: #333;
+    border: 2px solid #222;
+    position: relative;
+    transition: all 0.1s ease;
+}
+
+.arrow.up {
+    grid-column: 2;
+    grid-row: 1;
+    border-radius: 4px 4px 0 0;
+}
+
+.arrow.left {
+    grid-column: 1;
+    grid-row: 2;
+    border-radius: 4px 0 0 4px;
+}
+
+.arrow.right {
+    grid-column: 3;
+    grid-row: 2;
+    border-radius: 0 4px 4px 0;
+}
+
+.arrow.down {
+    grid-column: 2;
+    grid-row: 3;
+    border-radius: 0 0 4px 4px;
+}
+
+.arrow:hover {
+    background-color: #4caf50;
+    transform: scale(1.1);
+}
+
+.arrow:active {
+    background-color: #66bb6a;
+    transform: scale(0.95);
+}
+
+.cta-btn:active, .whatsapp-btn:active {
+    transform: translateY(0);
+    box-shadow: 1px 1px 0 #333;
+}
+
+.whatsapp-btn img {
+    width: 20px;
+    height: 20px;
+    vertical-align: middle;
+    margin-right: 8px;
+}
+
+/* Floating WhatsApp Button */
+.floating-whatsapp {
+    position: fixed;
+    bottom: 30px;
+    right: 30px;
+    width: 60px;
+    height: 60px;
+    background-color: #25d366;
+    border-radius: 50%;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    box-shadow: 0 5px 15px rgba(0, 0, 0, 0.2);
+    z-index: 999;
+    transition: all 0.3s ease;
+    border: 3px solid #333;
+}
+
+.floating-whatsapp:hover {
+    transform: scale(1.1);
+}
+
+.floating-whatsapp img {
+    width: 30px;
+    height: 30px;
+}
+
+/* Responsive button styles */
+@media (max-width: 768px) {
+    .cta-btn, .whatsapp-btn {
+        padding: 10px 20px;
+        font-size: 0.7rem;
+        width: 250px;
+    }
+    
+    .press-start-animation {
+        font-size: 1rem;
+    }
+    
+    .start-btn {
+        padding: 15px 35px;
+        font-size: 1.3rem;
+        margin: 20px auto;
+    }
+    
+    .game-controls {
+        margin-top: 20px;
+        gap: 20px;
+    }
+    
+    .control-pad {
+        width: 60px;
+        height: 60px;
+    }
+    
+    .control-pad::before {
+        width: 30px;
+        height: 30px;
+    }
+    
+    .control-arrows {
+        grid-template-columns: repeat(3, 25px);
+        grid-template-rows: repeat(3, 25px);
+    }
+    
+    .floating-whatsapp {
+        width: 50px;
+        height: 50px;
+        bottom: 20px;
+        right: 20px;
+    }
+    
+    .floating-whatsapp img {
+        width: 25px;
+        height: 25px;
+    }
+}
+
+@media (max-width: 480px) {
+    .cta-btn, .whatsapp-btn {
+        padding: 8px 16px;
+        font-size: 0.6rem;
+        width: 220px;
+        margin: 10px auto;
+    }
+    
+    .press-start-animation {
+        font-size: 0.8rem;
+    }
+    
+    .start-btn {
+        padding: 12px 25px;
+        font-size: 1.1rem;
+        margin: 15px auto;
+    }
+    
+    .start-btn::before,
+    .start-btn::after {
+        width: 20px;
+        height: 20px;
+    }
+    
+    .game-controls {
+        flex-direction: column;
+        align-items: center;
+        gap: 15px;
+        margin-top: 20px;
+    }
+}

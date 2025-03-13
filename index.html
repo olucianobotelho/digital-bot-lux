@@ -1,0 +1,311 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Luciano Botelho - Portfolio</title>
+    <link rel="icon" type="image/png" href="images/dollar.png">
+    <link rel="stylesheet" href="styles/reset.css">
+    <link rel="stylesheet" href="styles/layout.css">
+    <link rel="stylesheet" href="styles/components.css">
+    <link rel="stylesheet" href="styles/buttons.css">
+    <link rel="stylesheet" href="styles/animations.css">
+    <link rel="stylesheet" href="styles/Banner/banner.css">
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Press+Start+2P&display=swap" rel="stylesheet">
+    <link href="https://fonts.googleapis.com/css2?family=Roboto:wght@400;700&display=swap" rel="stylesheet">
+    <link href="https://fonts.googleapis.com/css2?family=VT323&display=swap" rel="stylesheet">
+    <link href="https://fonts.googleapis.com/css2?family=Montserrat:wght@600;800&display=swap" rel="stylesheet">
+    <style>
+        #coupon-dialog.hidden, #welcome-modal.hidden {
+            display: none !important;
+            opacity: 0 !important;
+            visibility: hidden !important;
+        }
+    </style>
+    <script src="scripts/navigation.js" defer></script>
+    <script src="scripts/Banner/banner-navigation.js" defer></script>
+    <script src="scripts/main.js" defer></script>
+    <!-- Scripts de jogos removidos já que não usamos mais os mini-games -->
+</head>
+<body>
+    <!-- Coin Counter -->
+    <div class="coin-counter-container">
+        <div class="coin-counter">
+            <div class="coin-icon"></div>
+            <span id="coin-count">0</span>
+        </div>
+    </div>
+
+    <!-- Diálogo de cupom -->
+    <div id="coupon-dialog" style="display: none;" class="coupon-overlay hidden">
+        <div class="coupon-container">
+            <div class="confetti"></div>
+            <div class="confetti"></div>
+            <div class="confetti"></div>
+            <div class="confetti"></div>
+            <div class="confetti"></div>
+            <div class="confetti"></div>
+            <div class="confetti"></div>
+            <div class="confetti"></div>
+            <h2>PARABÉNS!</h2>
+            <p>Você coletou 50 moedas!</p>
+            <div class="coupon-code">
+                <h3>Seu cupom de desconto:</h3>
+                <div class="code">SUPERMARIO5</div>
+                <p class="discount-info">5% de desconto em qualquer serviço</p>
+            </div>
+            <button id="close-coupon" class="pixel-button close-coupon-btn">FECHAR</button>
+        </div>
+    </div>
+
+    <!-- Modal de Boas-vindas no estilo arcade -->
+    <div id="welcome-modal" class="welcome-modal-overlay hidden">
+        <div class="welcome-modal-container">
+            <div class="welcome-modal-header">
+                <h2>DIGITAL BOTELHO</h2>
+                <div class="welcome-modal-decorations">
+                    <div class="mario-decoration left"></div>
+                    <div class="mario-decoration right"></div>
+                </div>
+            </div>
+            <div class="welcome-modal-content">
+                <h3>COLETE 50 MOEDAS</h3>
+                <p>Bem-vindo ao site! Explore e navegue para coletar moedas. Quando você conseguir 50 moedas, receberá um <span class="highlight">BRINDE ESPECIAL</span>!</p>
+                <div class="coin-display">
+                    <div class="modal-coin"></div>
+                    <span>x 50</span>
+                </div>
+                <p class="instructions">Dica: As moedas são presenteadas enquanto você explora o site!</p>
+                <div class="press-start blinking">PRESSIONE START</div>
+                <button id="start-game" class="pixel-button start-button">START GAME</button>
+            </div>
+        </div>
+    </div>
+
+    <!-- Hero Banner -->
+    <section class="hero-banner">
+        <div class="banner-image">
+            <div class="banner-content">
+                <h1>LUCIANO<br>BOTELHO</h1>
+                <p>Especialista em Growth Marketing</p>
+                <a href="#services" class="cta-btn">CONHEÇA NOSSOS SERVIÇOS</a>
+            </div>
+        </div>
+    </section>
+
+    <!-- Main Content -->
+    <main>
+        <!-- Services Section -->
+        <section id="services" class="section">
+            <h2 class="section-title arcade-text">O que eu ofereço</h2>
+            <div class="services-grid">
+                <div class="service-card">
+                    <img src="images/socialmedia.jpg" alt="Social Media">
+                    <h3 class="arcade-text">Social Media</h3>
+                    <p>Estratégias de conteúdo e gerenciamento de redes sociais para aumentar seu engajamento.</p>
+                    <a href="javascript:void(0)" class="cta-btn service-details-btn" data-service="socialmedia">Ver Detalhes</a>
+                </div>
+                <div class="service-card">
+                    <img src="images/gestaodetrafego.jpg" alt="Tráfego Pago">
+                    <h3 class="arcade-text">TRAFEGO PAGO</h3>
+                    <p>Campanhas otimizadas para atrair clientes qualificados para o seu negócio.</p>
+                    <a href="javascript:void(0)" class="cta-btn service-details-btn" data-service="trafego">Ver Detalhes</a>
+                </div>
+                <div class="service-card">
+                    <img src="images/criacaodesites.jpg" alt="Criação de Sites">
+                    <h3 class="arcade-text">Criação de Sites</h3>
+                    <p>Desenvolvimento de sites modernos, responsivos e otimizados para conversão.</p>
+                    <a href="javascript:void(0)" class="cta-btn service-details-btn" data-service="sites">Ver Detalhes</a>
+                </div>
+                <div class="service-card automacao">
+                    <img src="images/automaçoes.jpg" alt="Automação com IA">
+                    <h3 class="arcade-text">Automação com IA</h3>
+                    <p>Soluções inteligentes para automatizar processos e melhorar a experiência do cliente.</p>
+                    <a href="javascript:void(0)" class="cta-btn service-details-btn" data-service="automacao">Ver Detalhes</a>
+                </div>
+            </div>
+        </section>
+
+        <!-- Success Cases Section -->
+        <section id="cases" class="section">
+            <h2 class="section-title arcade-text">Cases de Sucesso</h2>
+            <div class="cases-grid">
+                <div class="case-card">
+                    <div class="case-image">
+                        <img src="images/rafaeltavares.png" alt="Rafael Tavares - Case de Sucesso">
+                    </div>
+                    <div class="case-content">
+                        <h3>Rafael Tavares</h3>
+                        <p class="case-meta">@rafa_prof12</p>
+                        <p>Alcançamos ROI de 6x em vendas de produtos físicos pela internet usando tráfego pago e WhatsApp, maximizando o retorno sobre o investimento. Obteve um faturamento de mais de 350 mil reais em 7 meses com as nossas estratégias.</p>
+                        <a href="#about" class="cta-btn">Quero Resultados Assim</a>
+                    </div>
+                </div>
+                <div class="case-card">
+                    <div class="case-image">
+                        <img src="images/paytec.png" alt="Paytec - Case de Sucesso">
+                    </div>
+                    <div class="case-content">
+                        <h3>Paytec</h3>
+                        <p class="case-meta">@paytecoficial_</p>
+                        <p>Gerenciamos o Instagram da Paytec, nossa grande parceira, aumentando sua taxa de engajamento e principalmente seu faturamento em 2x através de estratégias orgânicas.</p>
+                        <a href="#about" class="cta-btn">Quero Resultados Assim</a>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <!-- About Me Section -->
+        <section id="about" class="section">
+            <div class="container">
+                <h2 class="section-title arcade-text">Quem Sou Eu</h2>
+                <div class="about-content">
+                    <div class="about-text">
+                        <h3 class="arcade-text">OLÁ! <span class="emoji">👾</span></h3>
+                        <p>Sou o Luciano, um cara apaixonado por vendas, tráfego pago e linhas de código – sim, essa combinação inusitada me define! <span class="emoji">🚀</span> Aos 28 anos, vivo no Rio de Janeiro, onde a criatividade e a tecnologia se encontram para criar soluções incríveis.</p>
+                        <h3 class="arcade-text">O QUE ME MOVE? <span class="emoji">😃</span></h3>
+                        <p>Transformar desafios em oportunidades. Como especialista em tráfego, minha missão é conectar pessoas aos produtos e serviços que realmente importam para elas. E como programador, adoro criar ferramentas e sistemas que facilitam a vida das pessoas e impulsionam negócios.</p>
+                        <a href="#pricing" class="cta-btn">VAMOS CONVERSAR</a>
+                    </div>
+                    <div class="about-image-container">
+                        <div class="gameboy-screen-top">
+                            <div class="gameboy-light"></div>
+                        </div>
+                        <img src="images/luciano.jpg" alt="Luciano Botelho" class="about-image">
+                        <div class="gameboy-controls">
+                            <div class="gameboy-button"></div>
+                            <div class="gameboy-button"></div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <!-- Portfolio Section -->
+        <section id="portfolio" class="section">
+            <h2 class="section-title arcade-text">Portfolio</h2>
+            <div class="portfolio-grid">
+                <div class="portfolio-card">
+                    <img src="images/portfolio1.jpg" alt="Colégio Zenit Educa">
+                    <h3>Colégio Zenit Educa</h3>
+                    <p>Colégio Zenit Educa, um colégio focado no ensino da nova era digital.</p>
+                    <a href="https://zenit-educa.vercel.app/" class="cta-btn portfolio-btn" target="_blank">Ver Projeto</a>
+                </div>
+                <div class="portfolio-card">
+                    <img src="images/portfolio2.jpg" alt="Carlos Personal">
+                    <h3>Carlos Personal</h3>
+                    <p>Uma landing page de um personal trainer de elite</p>
+                    <a href="https://personal-elite.vercel.app/" class="cta-btn portfolio-btn" target="_blank">Ver Projeto</a>
+                </div>
+                <div class="portfolio-card">
+                    <img src="images/portfolio3.jpg" alt="PROJECTX">
+                    <h3>PROJECTX</h3>
+                    <p>Ferramenta gratuita para prospecção de clientes B2B.</p>
+                    <a href="#" class="cta-btn portfolio-btn locked" id="projeto-x-btn" disabled>ENTRAR NA LISTA DE ESPERA</a>
+                    <div class="release-date">Disponível em 18/03/2025</div>
+                </div>
+            </div>
+        </section>
+
+        <!-- Pricing Section -->
+        <section id="pricing" class="pricing-section">
+            <div class="container">
+                <h2 class="section-title arcade-text">VALORES PROMOCIONAIS</h2>
+                <p class="section-subtitle">Escolha o plano que melhor se encaixa no seu negócio!</p>
+                <div class="pricing-grid">
+                    <div class="pricing-card">
+                        <div class="card-header">
+                            <h3>WEBSITE</h3>
+                            <p class="price">R$897,00<span>/site</span></p>
+                        </div>
+                        <div class="card-content">
+                            <ul>
+                                <li>Design Responsivo</li>
+                                <li>Otimização SEO</li>
+                                <li>Integração com Redes Sociais</li>
+                                <li>Formulário de Contato</li>
+                                <li>Hospedagem não inclusa</li>
+                            </ul>
+                            <a href="#contact" class="cta-btn">CONTRATAR</a>
+                        </div>
+                    </div>
+                    
+                    <div class="pricing-card featured">
+                        <div class="card-header">
+                            <h3>SOCIAL MEDIA</h3>
+                            <p class="price">R$897,00<span>/mês</span></p>
+                        </div>
+                        <div class="card-content">
+                            <ul>
+                                <li>Gestão de 3 Redes Sociais</li>
+                                <li>15 Posts por Mês</li>
+                                <li>Estratégia de Conteúdo</li>
+                                <li>Relatórios Mensais</li>
+                                <li>Atendimento ao Cliente</li>
+                            </ul>
+                            <a href="#contact" class="cta-btn">CONTRATAR</a>
+                        </div>
+                    </div>
+                    
+                    <div class="pricing-card">
+                        <div class="card-header">
+                            <h3>TRAFEGO PAGO</h3>
+                            <p class="price">R$897,00<span>/mês</span></p>
+                        </div>
+                        <div class="card-content">
+                            <ul>
+                                <li>Campanhas Google Ads</li>
+                                <li>Campanhas Facebook Ads</li>
+                                <li>Otimização de Conversão</li>
+                                <li>Relatórios Semanais</li>
+                                <li>Retargeting Avançado</li>
+                            </ul>
+                            <a href="#contact" class="cta-btn">CONTRATAR</a>
+                        </div>
+                    </div>
+                </div>
+                <div class="whatsapp-button-container">
+                    <a href="https://wa.me/5521985520344" class="whatsapp-button pixel-button" target="_blank">FALE NO WHATSAPP</a>
+                </div>
+            </div>
+        </section>
+
+        <!-- WhatsApp Float Button -->
+        <a href="https://wa.me/5521985520344" class="whatsapp-float" target="_blank">
+            <img src="images/whatsapp.png" alt="WhatsApp">
+        </a>
+    </main>
+
+    <div id="dialog-overlay" class="dialog-overlay hidden">
+        <div class="dialog-box">
+            <div class="dialog-content">
+                <p id="dialog-text"></p>
+            </div>
+            <div class="dialog-controls">
+                <button id="dialog-next" class="dialog-btn">Próximo</button>
+            </div>
+        </div>
+    </div>
+
+    <!-- Diálogo de Serviço para Tráfego Pago -->
+    <div id="trafego-dialog" class="dialog-overlay hidden">
+        <div class="dialog-box">
+            <div class="dialog-header">
+                <h3>TRAFEGO PAGO</h3>
+            </div>
+            <div class="dialog-content">
+                <img src="images/gestaodetrafego.jpg" alt="Tráfego Pago" style="max-width: 100%; margin-bottom: 10px;">
+                <p>Pronto para aumentar suas vendas com tráfego pago? Vamos começar?</p>
+            </div>
+            <div class="dialog-controls">
+                <button id="trafego-close" class="dialog-btn">FECHAR<span></span></button>
+            </div>
+        </div>
+    </div>
+
+    <script src="scripts/animations.js"></script>
+    <script src="scripts/interactive.js"></script>
+</body>
+</html>

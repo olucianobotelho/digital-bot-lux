@@ -1,0 +1,30 @@
+DELETE TODOS OS ARQUIVOS E INICIE:
+QUERO UM SITE PARA MOSTRAR MEU PORTFOLIO
+EU NAO SOU UMA AGENCIA, ME CHAMO LUCIANO BOTELHO
+NAO QUERO QUE O SITE TENHA MENU E NEM FOOTER, NEM ABA DE CONTATO
+QUERO QUE TENHA UM BOTAO PARA CHAMAR NO WHATSAPP, QUERO QUE TENHA UM BOTAO DE CTA EM CADA SESSAO
+QUERO UMA TEMATICA ARCADE ESTILO MARIO, BEM AMIGAVEL
+VOU DIZER A ESTRUTURA QUE EU QUERO:
+1-OQ EU OFEREÇO(SOCIAL MEDIA, GESTAO DE TRAFEGO, CRIAÇAO DE SITES, AUTOMAÇAO COM IA)
+2-CASES DE SUCESSO(COLOQUE 2 CARDS COM FOTOS DE CASOS DE SUCESSO)
+3-QUEM SOU EU(DEIXE ESSA PARTE EM BRANCO, PARA QUE EU POSSA CRIAR COM VC DEPOIS)
+4-PORTFOLIO(CRIE 3 CARDS COM BOTOES PARA ACESSAR OS LINKS DOS PORTFOLIOS)
+5-VALORES DE SERVIÇOS(SOCIAL MEDIA:897 MENSAL, GESTAO 1290,00 MENSAL, CRIAÇAO DE SITE: A PARTIR DE 897, AUTOMAÇAO DE ATENDIMENTO POR IA: CONSULTE O VALOR GRATUITAMENTE)
+6-CRIE ESSE SITE USANDO JS VANILLA,HTML, CSS.
+
+USE ISSO COMO A ESSENCIA DO SITE:
+QUEM SOU EU:
+
+Sou o Luciano, um cara apaixonado por vendas, tráfego pago e linhas de código – sim, essa combinação inusitada me define! 🚀 Aos 28 anos, vivo no Rio de Janeiro, onde a criatividade e a tecnologia se encontram para criar soluções incríveis.
+
+O que me move? 🤔
+
+Transformar desafios em oportunidades. Como especialista em tráfego, minha missão é conectar pessoas aos produtos e serviços que realmente importam para elas. E como programador, adoro criar ferramentas e sistemas que facilitam a vida das pessoas e impulsionam negócios.
+
+Por que você deveria se conectar comigo? 🤝
+
+Porque acredito que o sucesso é construído com colaboração e empatia. Se você busca um profissional que une a precisão dos dados com a sensibilidade humana, para criar estratégias de vendas e soluções tecnológicas personalizadas, encontrou a pessoa certa! 😉
+
+Vamos juntos? 🚀
+
+Estou sempre aberto a novas ideias, parcerias e desafios. Se você tem um projeto em mente ou simplesmente quer trocar uma ideia sobre o mundo do marketing digital e da tecnologia, me manda uma mensagem! Adoro conhecer pessoas novas e construir pontes. 
