@@ -5,7 +5,8 @@ const coinTarget = 50; // Alvo para exibir o cupom
 let couponShown = false; // Controle para garantir que o cupom seja mostrado apenas uma vez
 let interactedElements = new Set(); // Conjunto para rastrear elementos já interagidos
 let isProcessingAction = false; // Evitar processar ações simultâneas
-const COIN_VALUE = 8; // Valor de cada interação válida - 8 pontos conforme solicitado
+const COIN_VALUE = 9; // Valor base aumentado para 9 pontos por interação (conforme solicitado)
+let lastInteractionTime = 0; // Mantido para controle de rate limit
 
 // Controle para verificar se o cupom deve ser mostrado quando outros modais fecharem
 let couponPending = false;
@@ -265,10 +266,18 @@ function addCoin(element) {
             return;
         }
         
+        // Verificar se passou tempo suficiente desde a última interação (mínimo 500ms)
+        const currentTime = Date.now();
+        if (currentTime - lastInteractionTime < 500) { 
+            console.log("Cliques muito rápidos, ignorando");
+            return;
+        }
+        lastInteractionTime = currentTime;
+        
         // Registrar este elemento como interagido
         interactedElements.add(elementId);
         
-        // Aumentar a pontuação com o valor definido (8 pontos)
+        // Aumentar a pontuação com o valor fixo de 9 pontos
         coinCount += COIN_VALUE;
         console.log("Moedas adicionadas! Total:", coinCount);
         
@@ -598,11 +607,33 @@ document.addEventListener('DOMContentLoaded', () => {
     // Mostrar modal de boas-vindas após um pequeno atraso
     setTimeout(showWelcomeModal, 500);
     
-    // Iniciar verificação de seções visíveis
+    // Iniciar verificação de seções visíveis (limitar frequência para evitar pontuação excessiva)
     checkVisibleSections();
+    
+    // Evitar intervalos muito frequentes que podem gerar pontuação excessiva
+    setInterval(checkVisibleSections, 3000); // Reduzindo a frequência de verificação
+    
+    // Desabilitar scripts que possam causar contagem dupla
+    try {
+        // Verificar se o script interactive.js está carregado e desabilitar funções conflitantes
+        if (window.disableInteractiveScoring) {
+            window.disableInteractiveScoring();
+        }
+    } catch (e) {
+        console.error("Erro ao tentar desabilitar pontuação duplicada:", e);
+    }
     
     // Configurar o diálogo de tráfego pago
     setupTrafegoDialog();
+    
+    // Configurar o diálogo de automação
+    setupAutomacaoDialog();
+    
+    // Configurar o diálogo de social media
+    setupSocialmediaDialog();
+    
+    // Configurar o diálogo de sites
+    setupSitesDialog();
     
     // Tratar os erros do tipo "Unexpected token 'export'"
     fixExportErrors();
@@ -614,11 +645,20 @@ document.addEventListener('DOMContentLoaded', () => {
     // Sistema de delegação de eventos completamente novo
     document.addEventListener('click', handleGlobalClick, { passive: true });
     
-    // Verificação periódica de seções visíveis
-    setInterval(checkVisibleSections, 1000);
-    
     // Adicionar manipuladores de eventos para todos os possíveis diálogos
     setupModalCloseHandlers();
+    
+    // Configurar botões de serviço
+    document.querySelectorAll('.service-details-btn').forEach(button => {
+        button.addEventListener('click', (e) => {
+            e.preventDefault();
+            const service = button.getAttribute('data-service');
+            showServiceModal(service);
+            
+            // Adicionar moedas pela interação
+            addCoin(button);
+        });
+    });
 });
 
 // Função para corrigir erros de export no JS
@@ -856,7 +896,10 @@ function setupModalCloseHandlers() {
     // Lista de seletores de botões de fechamento para diferentes modais
     const closeButtonSelectors = [
         '#dialog-next',         // Dialog genérico
-        '#trafego-close',       // Dialog de tráfego
+        '#trafego-next',        // Dialog de tráfego
+        '#automacao-next',      // Dialog de automação
+        '#socialmedia-next',    // Dialog de social media
+        '#sites-next',          // Dialog de sites
         '#close-coupon',        // Dialog de cupom
         '#start-game'           // Modal de boas-vindas
     ];
@@ -901,49 +944,221 @@ function findClosestInteractiveElement(element) {
     return null;
 }
 
-// Configurar diálogo de tráfego pago
-function setupTrafegoDialog() {
-    // Encontrar o card de tráfego pago usando uma abordagem mais segura
-    const trafegoCards = document.querySelectorAll('.pricing-card .card-header h3');
-    let trafegoCard = null;
+// Conteúdo do diálogo de automação
+const automacaoContent = [
+    "Bem-vindo ao nosso serviço de Automação com IA! 🤖",
+    "Nós criamos soluções inteligentes para automatizar processos repetitivos.",
+    "Desenvolvemos chatbots personalizados e humanizados para melhorar o atendimento ao cliente.",
+    "Implementamos sistemas de resposta automática para suas redes sociais.",
+    "Desenvolvemos seu próprio Agente de IA para atender seu público ou realizar tarefas repetitivas.",
+    "Pronto para economizar tempo e recursos com automação? Vamos começar!"
+];
+
+// Conteúdo do diálogo de social media
+const socialmediaContent = [
+    "Bem-vindo ao nosso serviço de Social Media! 👋",
+    "Eu pessoalmente gerencio todo o conteúdo e estratégia das suas redes sociais.",
+    "Crio calendários de postagem personalizados para sua marca.",
+    "Desenvolvo conteúdos de alta qualidade para engajar seu público.",
+    "Analiso métricas e ajusto as estratégias para maximizar resultados.",
+    "Respondo comentários e interajo com sua audiência.",
+    "Forneço relatórios mensais detalhados sobre o desempenho.",
+    "Pronto para transformar suas redes sociais? Vamos começar!"
+];
+
+// Conteúdo do diálogo de sites
+const sitesContent = [
+    "Bem-vindo ao meu serviço de Criação de Sites! 💻",
+    "Desenvolvo sites modernos, responsivos e otimizados para SEO.",
+    "Implementamos funcionalidades avançadas como e-commerce, formulários e integrações.",
+    "Otimizamos a experiência do usuário para maximizar conversões.",
+    "Garantimos que seu site carregue rapidamente em todos os dispositivos.",
+    "Fornecemos suporte técnico após o lançamento.",
+    "Pronto para ter um site profissional e que converte? Vamos começar!"
+];
+
+// Conteúdo do diálogo de tráfego
+const trafegoContent = [
+    "Bem-vindo ao meu serviço de Gestão de Tráfego! 🚀",
+    "Crio e otimizo campanhas no Facebook e Instagram Ads.",
+    "Segmento seu público-alvo com precisão para atingir potenciais clientes.",
+    "Crio anúncios atrativos que convertem visualizações em vendas.",
+    "Monitoro e otimizo suas campanhas diariamente.",
+    "Realizo testes A/B para maximizar seus resultados.",
+    "Forneço relatórios semanais detalhados sobre o desempenho.",
+    "Pronto para aumentar suas vendas com tráfego pago? Vamos começar!"
+];
+
+// Configurar diálogo de automação
+function setupAutomacaoDialog() {
+    const automacaoDialog = document.getElementById('automacao-dialog');
+    const automacaoText = document.getElementById('automacao-text');
+    const automacaoNextBtn = document.getElementById('automacao-next');
+    let currentStep = 0;
     
-    trafegoCards.forEach(card => {
-        if (card.textContent.includes('TRAFEGO PAGO')) {
-            trafegoCard = card;
+    // Garantir que os elementos existam
+    if (!automacaoDialog || !automacaoText || !automacaoNextBtn) {
+        console.error('Elementos do diálogo de automação não encontrados');
+        return;
+    }
+    
+    // Event listener para o botão próximo/fechar
+    automacaoNextBtn.addEventListener('click', () => {
+        currentStep++;
+        
+        if (currentStep < automacaoContent.length) {
+            // Mostrar o próximo texto
+            automacaoText.textContent = automacaoContent[currentStep];
+            
+            // Mudar o texto do botão para "FECHAR" no último passo
+            if (currentStep === automacaoContent.length - 1) {
+                automacaoNextBtn.textContent = "FECHAR";
+            }
+        } else {
+            // Fechar o diálogo quando chegar ao fim
+            automacaoDialog.classList.add('hidden');
+            automacaoDialog.style.display = 'none';
+            
+            // Resetar para o primeiro passo
+            currentStep = 0;
+            automacaoText.textContent = automacaoContent[0];
+            automacaoNextBtn.textContent = "PRÓXIMO";
+            
+            // Verificar se deve mostrar o cupom
+            if (coinCount >= coinTarget && !couponShown) {
+                setTimeout(forceShowCoupon, 300);
+            }
         }
     });
+}
+
+// Configurar diálogo de social media
+function setupSocialmediaDialog() {
+    const socialmediaDialog = document.getElementById('socialmedia-dialog');
+    const socialmediaText = document.getElementById('socialmedia-text');
+    const socialmediaNextBtn = document.getElementById('socialmedia-next');
+    let currentStep = 0;
     
-    const trafegoDialog = document.getElementById('trafego-dialog');
-    const closeTrafegoBtn = document.getElementById('trafego-close');
+    // Garantir que os elementos existam
+    if (!socialmediaDialog || !socialmediaText || !socialmediaNextBtn) {
+        console.error('Elementos do diálogo de social media não encontrados');
+        return;
+    }
     
-    if (trafegoCard && trafegoDialog) {
-        // Usar o parentNode para chegar ao card inteiro
-        const card = trafegoCard.closest('.pricing-card');
+    // Event listener para o botão próximo/fechar
+    socialmediaNextBtn.addEventListener('click', () => {
+        currentStep++;
         
-        if (card) {
-            card.addEventListener('click', (e) => {
-                trafegoDialog.classList.remove('hidden');
-                
-                // Verificar se deve mostrar o cupom após fechar
-                if (coinCount >= coinTarget && !couponShown) {
-                    couponPending = true;
-                }
-            });
+        if (currentStep < socialmediaContent.length) {
+            // Mostrar o próximo texto
+            socialmediaText.textContent = socialmediaContent[currentStep];
+            
+            // Mudar o texto do botão para "FECHAR" no último passo
+            if (currentStep === socialmediaContent.length - 1) {
+                socialmediaNextBtn.textContent = "FECHAR";
+            }
+        } else {
+            // Fechar o diálogo quando chegar ao fim
+            socialmediaDialog.classList.add('hidden');
+            socialmediaDialog.style.display = 'none';
+            
+            // Resetar para o primeiro passo
+            currentStep = 0;
+            socialmediaText.textContent = socialmediaContent[0];
+            socialmediaNextBtn.textContent = "PRÓXIMO";
+            
+            // Verificar se deve mostrar o cupom
+            if (coinCount >= coinTarget && !couponShown) {
+                setTimeout(forceShowCoupon, 300);
+            }
         }
+    });
+}
+
+// Configurar diálogo de sites
+function setupSitesDialog() {
+    const sitesDialog = document.getElementById('sites-dialog');
+    const sitesText = document.getElementById('sites-text');
+    const sitesNextBtn = document.getElementById('sites-next');
+    let currentStep = 0;
+    
+    // Garantir que os elementos existam
+    if (!sitesDialog || !sitesText || !sitesNextBtn) {
+        console.error('Elementos do diálogo de sites não encontrados');
+        return;
     }
     
-    if (closeTrafegoBtn && trafegoDialog) {
-        closeTrafegoBtn.addEventListener('click', () => {
-            trafegoDialog.classList.add('hidden');
+    // Event listener para o botão próximo/fechar
+    sitesNextBtn.addEventListener('click', () => {
+        currentStep++;
+        
+        if (currentStep < sitesContent.length) {
+            // Mostrar o próximo texto
+            sitesText.textContent = sitesContent[currentStep];
             
-            // Verificar se há cupons pendentes após fechar o diálogo
-            setTimeout(() => {
-                if (coinCount >= coinTarget && !couponShown) {
-                    forceShowCoupon();
-                }
-            }, 500);
-        });
+            // Mudar o texto do botão para "FECHAR" no último passo
+            if (currentStep === sitesContent.length - 1) {
+                sitesNextBtn.textContent = "FECHAR";
+            }
+        } else {
+            // Fechar o diálogo quando chegar ao fim
+            sitesDialog.classList.add('hidden');
+            sitesDialog.style.display = 'none';
+            
+            // Resetar para o primeiro passo
+            currentStep = 0;
+            sitesText.textContent = sitesContent[0];
+            sitesNextBtn.textContent = "PRÓXIMO";
+            
+            // Verificar se deve mostrar o cupom
+            if (coinCount >= coinTarget && !couponShown) {
+                setTimeout(forceShowCoupon, 300);
+            }
+        }
+    });
+}
+
+// Configurar diálogo de tráfego pago
+function setupTrafegoDialog() {
+    const trafegoDialog = document.getElementById('trafego-dialog');
+    const trafegoText = document.getElementById('trafego-text');
+    const trafegoNextBtn = document.getElementById('trafego-next');
+    let currentStep = 0;
+    
+    // Garantir que os elementos existam
+    if (!trafegoDialog || !trafegoText || !trafegoNextBtn) {
+        console.error('Elementos do diálogo de tráfego não encontrados');
+        return;
     }
+    
+    // Event listener para o botão próximo/fechar
+    trafegoNextBtn.addEventListener('click', () => {
+        currentStep++;
+        
+        if (currentStep < trafegoContent.length) {
+            // Mostrar o próximo texto
+            trafegoText.textContent = trafegoContent[currentStep];
+            
+            // Mudar o texto do botão para "FECHAR" no último passo
+            if (currentStep === trafegoContent.length - 1) {
+                trafegoNextBtn.textContent = "FECHAR";
+            }
+        } else {
+            // Fechar o diálogo quando chegar ao fim
+            trafegoDialog.classList.add('hidden');
+            trafegoDialog.style.display = 'none';
+            
+            // Resetar para o primeiro passo
+            currentStep = 0;
+            trafegoText.textContent = trafegoContent[0];
+            trafegoNextBtn.textContent = "PRÓXIMO";
+            
+            // Verificar se deve mostrar o cupom
+            if (coinCount >= coinTarget && !couponShown) {
+                setTimeout(forceShowCoupon, 300);
+            }
+        }
+    });
 }
 
 // Função para redefinir o estado do cupom (para testes)
@@ -970,4 +1185,153 @@ function resetCouponState() {
 }
 
 // Expor a função para o escopo global para testes
-window.resetCouponState = resetCouponState; 
+window.resetCouponState = resetCouponState;
+
+// Função para mostrar modal de serviço
+function showServiceModal(serviceType) {
+    // Correção para o problema do modal de tráfego
+    // Verificar especificamente se é o serviço de tráfego e usar o modal dedicado
+    if (serviceType === 'trafego') {
+        const trafegoDialog = document.getElementById('trafego-dialog');
+        if (trafegoDialog) {
+            // Fechar outros modais primeiro
+            closeAllModalsExceptCoupon();
+            
+            // Mostrar o modal específico de tráfego
+            trafegoDialog.classList.remove('hidden');
+            trafegoDialog.style.display = 'flex';
+            trafegoDialog.style.opacity = '1';
+            
+            // Resetar para o primeiro passo
+            const trafegoText = document.getElementById('trafego-text');
+            const trafegoNextBtn = document.getElementById('trafego-next');
+            if (trafegoText && trafegoNextBtn) {
+                trafegoText.textContent = trafegoContent[0];
+                trafegoNextBtn.textContent = "PRÓXIMO";
+            }
+            
+            // Adicionar classe específica para estilização
+            trafegoDialog.classList.add('service-modal');
+            
+            return;
+        }
+    }
+    
+    // Para o serviço de automação, usar o modal específico
+    if (serviceType === 'automacao') {
+        const automacaoDialog = document.getElementById('automacao-dialog');
+        if (automacaoDialog) {
+            // Fechar outros modais primeiro
+            closeAllModalsExceptCoupon();
+            
+            // Mostrar o modal específico de automação
+            automacaoDialog.classList.remove('hidden');
+            automacaoDialog.style.display = 'flex';
+            automacaoDialog.style.opacity = '1';
+            
+            // Resetar para o primeiro passo
+            const automacaoText = document.getElementById('automacao-text');
+            const automacaoNextBtn = document.getElementById('automacao-next');
+            if (automacaoText && automacaoNextBtn) {
+                automacaoText.textContent = automacaoContent[0];
+                automacaoNextBtn.textContent = "PRÓXIMO";
+            }
+            
+            return;
+        }
+    }
+    
+    // Para o serviço de social media, usar o modal específico
+    if (serviceType === 'socialmedia') {
+        const socialmediaDialog = document.getElementById('socialmedia-dialog');
+        if (socialmediaDialog) {
+            // Fechar outros modais primeiro
+            closeAllModalsExceptCoupon();
+            
+            // Mostrar o modal específico de social media
+            socialmediaDialog.classList.remove('hidden');
+            socialmediaDialog.style.display = 'flex';
+            socialmediaDialog.style.opacity = '1';
+            
+            // Resetar para o primeiro passo
+            const socialmediaText = document.getElementById('socialmedia-text');
+            const socialmediaNextBtn = document.getElementById('socialmedia-next');
+            if (socialmediaText && socialmediaNextBtn) {
+                socialmediaText.textContent = socialmediaContent[0];
+                socialmediaNextBtn.textContent = "PRÓXIMO";
+            }
+            
+            return;
+        }
+    }
+    
+    // Para o serviço de sites, usar o modal específico
+    if (serviceType === 'sites') {
+        const sitesDialog = document.getElementById('sites-dialog');
+        if (sitesDialog) {
+            // Fechar outros modais primeiro
+            closeAllModalsExceptCoupon();
+            
+            // Mostrar o modal específico de sites
+            sitesDialog.classList.remove('hidden');
+            sitesDialog.style.display = 'flex';
+            sitesDialog.style.opacity = '1';
+            
+            // Resetar para o primeiro passo
+            const sitesText = document.getElementById('sites-text');
+            const sitesNextBtn = document.getElementById('sites-next');
+            if (sitesText && sitesNextBtn) {
+                sitesText.textContent = sitesContent[0];
+                sitesNextBtn.textContent = "PRÓXIMO";
+            }
+            
+            return;
+        }
+    }
+    
+    // Para outros serviços, tentar usar o modal específico primeiro
+    const modalId = `${serviceType}-dialog`;
+    const modal = document.getElementById(modalId);
+    
+    if (modal) {
+        // Fechar outros modais primeiro
+        closeAllModalsExceptCoupon();
+        
+        // Mostrar o modal do serviço
+        modal.classList.remove('hidden');
+        modal.style.display = 'flex';
+        modal.style.opacity = '1';
+        
+        // Adicionar evento ao botão de fechar
+        const closeBtn = modal.querySelector('.dialog-btn, .close-btn');
+        if (closeBtn) {
+            closeBtn.onclick = () => {
+                modal.classList.add('hidden');
+                modal.style.display = 'none';
+                
+                // Verificar se deve mostrar o cupom
+                if (coinCount >= coinTarget && !couponShown) {
+                    setTimeout(forceShowCoupon, 300);
+                }
+            };
+        }
+    } else {
+        // Fallback para o dialog overlay genérico
+        const dialogOverlay = document.getElementById('dialog-overlay');
+        const dialogText = document.getElementById('dialog-text');
+        
+        if (dialogOverlay && dialogText) {
+            // Fechar outros modais primeiro
+            closeAllModalsExceptCoupon();
+            
+            // Mostrar detalhes básicos no modal genérico
+            dialogText.textContent = `Serviço de ${serviceType} - Entre em contato para mais detalhes.`;
+            dialogOverlay.classList.remove('hidden');
+            dialogOverlay.style.display = 'flex';
+        }
+    }
+}
+
+// Expor a função showServiceModal para o escopo global 
+// para evitar implementação duplicada em interactive.js
+window.showServiceModal = showServiceModal; 

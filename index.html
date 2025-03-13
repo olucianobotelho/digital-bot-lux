@@ -72,7 +72,7 @@
             </div>
             <div class="welcome-modal-content">
                 <h3>COLETE 50 MOEDAS</h3>
-                <p>Bem-vindo ao site! Explore e navegue para coletar moedas. Quando você conseguir 50 moedas, receberá um <span class="highlight">BRINDE ESPECIAL</span>!</p>
+                <p>Regras: Explore e navegue para coletar moedas. Quando você conseguir 50 moedas, receberá um BRINDE ESPECIAL!</p>
                 <div class="coin-display">
                     <div class="modal-coin"></div>
                     <span>x 50</span>
@@ -105,25 +105,25 @@
                     <img src="images/socialmedia.jpg" alt="Social Media">
                     <h3 class="arcade-text">Social Media</h3>
                     <p>Estratégias de conteúdo e gerenciamento de redes sociais para aumentar seu engajamento.</p>
-                    <a href="javascript:void(0)" class="cta-btn service-details-btn" data-service="socialmedia">Ver Detalhes</a>
+                    <button class="cta-btn service-details-btn" data-service="socialmedia">Ver Detalhes</button>
                 </div>
                 <div class="service-card">
                     <img src="images/gestaodetrafego.jpg" alt="Tráfego Pago">
                     <h3 class="arcade-text">TRAFEGO PAGO</h3>
                     <p>Campanhas otimizadas para atrair clientes qualificados para o seu negócio.</p>
-                    <a href="javascript:void(0)" class="cta-btn service-details-btn" data-service="trafego">Ver Detalhes</a>
+                    <button class="cta-btn service-details-btn" data-service="trafego">Ver Detalhes</button>
                 </div>
                 <div class="service-card">
                     <img src="images/criacaodesites.jpg" alt="Criação de Sites">
                     <h3 class="arcade-text">Criação de Sites</h3>
                     <p>Desenvolvimento de sites modernos, responsivos e otimizados para conversão.</p>
-                    <a href="javascript:void(0)" class="cta-btn service-details-btn" data-service="sites">Ver Detalhes</a>
+                    <button class="cta-btn service-details-btn" data-service="sites">Ver Detalhes</button>
                 </div>
                 <div class="service-card automacao">
                     <img src="images/automaçoes.jpg" alt="Automação com IA">
                     <h3 class="arcade-text">Automação com IA</h3>
                     <p>Soluções inteligentes para automatizar processos e melhorar a experiência do cliente.</p>
-                    <a href="javascript:void(0)" class="cta-btn service-details-btn" data-service="automacao">Ver Detalhes</a>
+                    <button class="cta-btn service-details-btn" data-service="automacao">Ver Detalhes</button>
                 </div>
             </div>
         </section>
@@ -167,18 +167,15 @@
                         <p>Sou o Luciano, um cara apaixonado por vendas, tráfego pago e linhas de código – sim, essa combinação inusitada me define! <span class="emoji">🚀</span> Aos 28 anos, vivo no Rio de Janeiro, onde a criatividade e a tecnologia se encontram para criar soluções incríveis.</p>
                         <h3 class="arcade-text">O QUE ME MOVE? <span class="emoji">😃</span></h3>
                         <p>Transformar desafios em oportunidades. Como especialista em tráfego, minha missão é conectar pessoas aos produtos e serviços que realmente importam para elas. E como programador, adoro criar ferramentas e sistemas que facilitam a vida das pessoas e impulsionam negócios.</p>
-                        <a href="#pricing" class="cta-btn">VAMOS CONVERSAR</a>
                     </div>
-                    <div class="about-image-container">
-                        <div class="gameboy-screen-top">
-                            <div class="gameboy-light"></div>
+                    <div class="gameboy-container">
+                        <div class="gameboy-screen">
+                            <img src="images/luciano.jpg" alt="Foto do Luciano" />
+                            <div class="gameboy-screen-overlay"></div>
                         </div>
-                        <img src="images/luciano.jpg" alt="Luciano Botelho" class="about-image">
-                        <div class="gameboy-controls">
-                            <div class="gameboy-button"></div>
-                            <div class="gameboy-button"></div>
-                        </div>
+                        <div class="gameboy-brand">GAME BOY</div>
                     </div>
+                    <a href="#pricing" class="cta-btn">VAMOS CONVERSAR</a>
                 </div>
             </div>
         </section>
@@ -290,17 +287,65 @@
     </div>
 
     <!-- Diálogo de Serviço para Tráfego Pago -->
-    <div id="trafego-dialog" class="dialog-overlay hidden">
+    <div id="trafego-dialog" class="dialog-overlay service-modal hidden">
         <div class="dialog-box">
             <div class="dialog-header">
                 <h3>TRAFEGO PAGO</h3>
             </div>
             <div class="dialog-content">
                 <img src="images/gestaodetrafego.jpg" alt="Tráfego Pago" style="max-width: 100%; margin-bottom: 10px;">
-                <p>Pronto para aumentar suas vendas com tráfego pago? Vamos começar?</p>
+                <p id="trafego-text">Bem-vindo ao meu serviço de Gestão de Tráfego! 🚀</p>
             </div>
             <div class="dialog-controls">
-                <button id="trafego-close" class="dialog-btn">FECHAR<span></span></button>
+                <button id="trafego-next" class="dialog-btn">PRÓXIMO<span></span></button>
+            </div>
+        </div>
+    </div>
+
+    <!-- Diálogo de Serviço para Automação com IA -->
+    <div id="automacao-dialog" class="dialog-overlay service-modal hidden">
+        <div class="dialog-box">
+            <div class="dialog-header">
+                <h3>AUTOMAÇÃO COM IA</h3>
+            </div>
+            <div class="dialog-content">
+                <img src="images/automaçoes.jpg" alt="Automação com IA" style="max-width: 100%; margin-bottom: 10px;">
+                <p id="automacao-text">Bem-vindo ao nosso serviço de Automação com IA! 🤖</p>
+            </div>
+            <div class="dialog-controls">
+                <button id="automacao-next" class="dialog-btn">PRÓXIMO<span></span></button>
+            </div>
+        </div>
+    </div>
+
+    <!-- Diálogo de Serviço para Social Media -->
+    <div id="socialmedia-dialog" class="dialog-overlay service-modal hidden">
+        <div class="dialog-box">
+            <div class="dialog-header">
+                <h3>SOCIAL MEDIA</h3>
+            </div>
+            <div class="dialog-content">
+                <img src="images/socialmedia.jpg" alt="Social Media" style="max-width: 100%; margin-bottom: 10px;">
+                <p id="socialmedia-text">Bem-vindo ao nosso serviço de Social Media! 👋</p>
+            </div>
+            <div class="dialog-controls">
+                <button id="socialmedia-next" class="dialog-btn">PRÓXIMO<span></span></button>
+            </div>
+        </div>
+    </div>
+
+    <!-- Diálogo de Serviço para Criação de Sites -->
+    <div id="sites-dialog" class="dialog-overlay service-modal hidden">
+        <div class="dialog-box">
+            <div class="dialog-header">
+                <h3>CRIAÇÃO DE SITES</h3>
+            </div>
+            <div class="dialog-content">
+                <img src="images/criacaodesites.jpg" alt="Criação de Sites" style="max-width: 100%; margin-bottom: 10px;">
+                <p id="sites-text">Bem-vindo ao meu serviço de Criação de Sites! 💻</p>
+            </div>
+            <div class="dialog-controls">
+                <button id="sites-next" class="dialog-btn">PRÓXIMO<span></span></button>
             </div>
         </div>
     </div>

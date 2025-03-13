@@ -3,42 +3,39 @@ document.addEventListener('DOMContentLoaded', function() {
     const serviceDialogs = {
         'socialmedia': [
             "Bem-vindo ao nosso serviço de Social Media! 👋",
-            "Nós gerenciamos todo o conteúdo e estratégia das suas redes sociais.",
-            "Criamos calendários de postagem personalizados para sua marca.",
-            "Desenvolvemos conteúdos de alta qualidade para engajar seu público.",
-            "Analisamos métricas e ajustamos as estratégias para maximizar resultados.",
-            "Respondemos comentários e interagimos com sua audiência.",
-            "Fornecemos relatórios mensais detalhados sobre o desempenho.",
+            "Eu pessoalmente gerencio todo o conteúdo e estratégia das suas redes sociais.",
+            "Crio calendários de postagem personalizados para sua marca.",
+            "Desenvolvo conteúdos de alta qualidade para engajar seu público.",
+            "Analiso métricas e ajusto as estratégias para maximizar resultados.",
+            "Respondo comentários e interajo com sua audiência.",
+            "Forneço relatórios mensais detalhados sobre o desempenho.",
             "Pronto para transformar suas redes sociais? Vamos começar!"
         ],
         'trafego': [
-            "Bem-vindo ao nosso serviço de Gestão de Tráfego! 🚀",
-            "Nós criamos e otimizamos campanhas no Facebook e Instagram Ads.",
-            "Segmentamos seu público-alvo com precisão para atingir potenciais clientes.",
-            "Criamos anúncios atrativos que convertem visualizações em vendas.",
-            "Monitoramos e otimizamos suas campanhas diariamente.",
-            "Realizamos testes A/B para maximizar seus resultados.",
-            "Fornecemos relatórios semanais detalhados sobre o desempenho.",
+            "Bem-vindo ao meu serviço de Gestão de Tráfego! 🚀",
+            "Crio e otimizo campanhas no Facebook e Instagram Ads.",
+            "Segmento seu público-alvo com precisão para atingir potenciais clientes.",
+            "Crio anúncios atrativos que convertem visualizações em vendas.",
+            "Monitoro e otimizo suas campanhas diariamente.",
+            "Realizo testes A/B para maximizar seus resultados.",
+            "Forneço relatórios semanais detalhados sobre o desempenho.",
             "Pronto para aumentar suas vendas com tráfego pago? Vamos começar!"
         ],
         'sites': [
-            "Bem-vindo ao nosso serviço de Criação de Sites! 💻",
-            "Nós desenvolvemos sites modernos, responsivos e otimizados para SEO.",
-            "Criamos designs personalizados que refletem a identidade da sua marca.",
+            "Bem-vindo ao meu serviço de Criação de Sites! 💻",
+            "Desenvolvo sites modernos, responsivos e otimizados para SEO.",
             "Implementamos funcionalidades avançadas como e-commerce, formulários e integrações.",
             "Otimizamos a experiência do usuário para maximizar conversões.",
             "Garantimos que seu site carregue rapidamente em todos os dispositivos.",
-            "Fornecemos suporte técnico contínuo após o lançamento.",
+            "Fornecemos suporte técnico após o lançamento.",
             "Pronto para ter um site profissional e que converte? Vamos começar!"
         ],
         'automacao': [
             "Bem-vindo ao nosso serviço de Automação com IA! 🤖",
             "Nós criamos soluções inteligentes para automatizar processos repetitivos.",
-            "Desenvolvemos chatbots personalizados para melhorar o atendimento ao cliente.",
+            "Desenvolvemos chatbots personalizados e humanizados para melhorar o atendimento ao cliente.",
             "Implementamos sistemas de resposta automática para suas redes sociais.",
-            "Automatizamos fluxos de email marketing para nutrição de leads.",
-            "Criamos sistemas de análise de dados para insights de negócio.",
-            "Integramos diferentes plataformas para criar fluxos de trabalho eficientes.",
+            "Desenvolvo seu proprio Agente de IA para atender seu público ou realizar tarefas repetitivas.",
             "Pronto para economizar tempo e recursos com automação? Vamos começar!"
         ]
     };
@@ -56,61 +53,51 @@ document.addEventListener('DOMContentLoaded', function() {
     const servicesSection = document.getElementById('services');
     const pricingSection = document.getElementById('pricing');
     
-    // Service detail buttons
-    const serviceDetailBtns = document.querySelectorAll('.service-details-btn');
+    // Flag para controlar se o sistema de pontuação está habilitado
+    let scoringEnabled = false;
     
-    // Current dialog state
-    let currentDialogService = null;
-    let currentDialogStep = 0;
-    
-    // Coin counter functionality
-    const coinCountElement = document.getElementById('coin-count');
-    let coinCount = 0;
-    
-    // Function to update coin count
-    function updateCoinCount(amount) {
-        coinCount += amount;
-        coinCountElement.textContent = `x ${coinCount}`;
+    // Função global para desabilitar o sistema de pontuação deste script
+    window.disableInteractiveScoring = function() {
+        console.log("Sistema de pontuação do interactive.js desativado para evitar duplicação");
+        scoringEnabled = false;
         
-        // Animate coin icon
-        const coinIcon = document.querySelector('.coin-icon');
-        coinIcon.classList.add('coin-collected');
-        
-        // Remove animation class after animation completes
-        setTimeout(() => {
-            coinIcon.classList.remove('coin-collected');
-        }, 500);
-    }
-    
-    // Add coins when interacting with elements
-    function setupCoinInteractions() {
-        // Add coins when clicking on service cards
+        // Remover event listeners relacionados à pontuação
         const serviceCards = document.querySelectorAll('.service-card');
         serviceCards.forEach(card => {
-            card.addEventListener('click', () => updateCoinCount(1));
+            card.removeEventListener('click', () => {});
         });
         
-        // Add coins when clicking on CTA buttons
         const ctaButtons = document.querySelectorAll('.cta-btn');
         ctaButtons.forEach(btn => {
-            btn.addEventListener('click', () => updateCoinCount(2));
+            btn.removeEventListener('click', () => {});
         });
         
-        // Add coins when scrolling to new sections
-        const sections = document.querySelectorAll('section');
-        let visitedSections = new Set();
-        
-        window.addEventListener('scroll', () => {
-            sections.forEach(section => {
-                if (isInViewport(section) && !visitedSections.has(section.id)) {
-                    visitedSections.add(section.id);
-                    updateCoinCount(5);
-                }
-            });
-        });
+        // Remover listeners de scroll para pontuação
+        window.removeEventListener('scroll', () => {});
+    };
+    
+    // Função para atualizar visualização do contador (sem alterar o valor real)
+    function updateCoinCountDisplay() {
+        // Apenas para manter a compatibilidade, não incrementa mais
+        const coinCountElement = document.getElementById('coin-count');
+        if (coinCountElement && scoringEnabled) {
+            // Agora apenas atualiza a visualização com o valor atual
+            const currentCount = coinCountElement.textContent;
+            
+            // Animar coin icon sem alterar o valor
+            const coinIcon = document.querySelector('.coin-icon');
+            if (coinIcon) {
+                coinIcon.classList.add('coin-collected');
+                
+                // Remove animation class after animation completes
+                setTimeout(() => {
+                    coinIcon.classList.remove('coin-collected');
+                }, 500);
+            }
+        }
     }
     
-    // Function to check if an element is in the viewport
+    // Função para verificar se o elemento está no viewport
     function isInViewport(element) {
         if (!element) return false;
         const rect = element.getBoundingClientRect();
@@ -120,7 +107,7 @@ document.addEventListener('DOMContentLoaded', function() {
         );
     }
     
-    // Function to update navigation button states based on scrolling
+    // Função para atualizar botões de navegação
     function updateNavButtons() {
         // Check services section
         if (isInViewport(servicesSection) || 
@@ -143,18 +130,26 @@ document.addEventListener('DOMContentLoaded', function() {
         }
     }
     
-    // Function to show service dialog
+    // Função para mostrar diálogo de serviço
     function showServiceDialog(serviceType) {
+        // Usar o sistema do main.js para mostrar diálogos de serviço
+        if (window.showServiceModal) {
+            window.showServiceModal(serviceType);
+            return;
+        }
+        
+        // Fallback caso a função do main.js não esteja disponível
         currentDialogService = serviceType;
         currentDialogStep = 0;
         updateDialogContent();
         dialogOverlay.classList.remove('hidden');
-        
-        // Add coins when viewing service details
-        updateCoinCount(3);
     }
     
-    // Function to update dialog content
+    // Current dialog state
+    let currentDialogService = null;
+    let currentDialogStep = 0;
+    
+    // Função para atualizar conteúdo do diálogo
     function updateDialogContent() {
         if (!currentDialogService) return;
         
@@ -167,34 +162,41 @@ document.addEventListener('DOMContentLoaded', function() {
         }
     }
     
-    // Function to close dialog
+    // Função para fechar diálogo
     function closeDialog() {
         dialogOverlay.classList.add('hidden');
         currentDialogService = null;
         currentDialogStep = 0;
     }
     
-    // Event listener for dialog next button
-    dialogNextBtn.addEventListener('click', function() {
-        currentDialogStep++;
-        updateDialogContent();
-    });
+    // Event listener para botão de próximo do diálogo
+    if (dialogNextBtn) {
+        dialogNextBtn.addEventListener('click', function() {
+            currentDialogStep++;
+            updateDialogContent();
+        });
+    }
     
-    // Event listeners for service detail buttons
+    // Event listeners para botões de detalhes de serviço
+    const serviceDetailBtns = document.querySelectorAll('.service-details-btn');
     serviceDetailBtns.forEach(btn => {
         btn.addEventListener('click', function(e) {
-            e.preventDefault();
-            const serviceType = this.getAttribute('data-service');
-            showServiceDialog(serviceType);
+            // Isso será gerenciado pelo main.js, este listener é apenas para garantir
+            // compatibilidade caso o main.js falhe
+            if (!window.showServiceModal) {
+                e.preventDefault();
+                const serviceType = this.getAttribute('data-service');
+                showServiceDialog(serviceType);
+            }
         });
     });
     
     // Listen for scroll events to update navigation buttons
     window.addEventListener('scroll', updateNavButtons);
     
-    // Initialize coin interactions
-    setupCoinInteractions();
-    
     // Initial check for button states
     updateNavButtons();
+
+    // Desabilita o sistema de pontuação por padrão para evitar conflitos
+    window.disableInteractiveScoring();
 });
