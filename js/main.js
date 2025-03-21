@@ -1,5 +1,8 @@
 // Inicialização de animações
 document.addEventListener('DOMContentLoaded', function() {
+    // Forçar scroll para o topo sempre que a página for carregada ou recarregada
+    window.scrollTo(0, 0);
+    
     // Evita rolagem automática para fragmentos na URL (resolve problema do F5)
     if (window.location.hash) {
         // Salva o hash para uso posterior, se necessário
@@ -8,16 +11,8 @@ document.addEventListener('DOMContentLoaded', function() {
         // Remove o hash da URL sem redirecionar ou recarregar a página
         history.replaceState(null, document.title, window.location.pathname + window.location.search);
         
-        // Força o scroll para o topo da página
+        // Força o scroll para o topo da página novamente, para garantir
         window.scrollTo(0, 0);
-        
-        // Após um breve delay, permite que a rolagem suave funcione normalmente
-        setTimeout(() => {
-            window.scrollTo({
-                top: 0,
-                behavior: 'auto'
-            });
-        }, 10);
     }
     
     // Previne que o hash seja mantido ao atualizar a página
@@ -26,7 +21,7 @@ document.addEventListener('DOMContentLoaded', function() {
             // Armazena a URL base sem o hash em localStorage para verificar se foi um F5
             localStorage.setItem('lastPath', window.location.pathname + window.location.search);
             
-            // Tenta limpar o hash (pode não funcionar em todos os navegadores devido ao comportamento do beforeunload)
+            // Limpa o hash
             if (history.replaceState) {
                 history.replaceState(null, document.title, window.location.pathname + window.location.search);
             }
@@ -56,13 +51,15 @@ document.addEventListener('DOMContentLoaded', function() {
     // Header scroll
     const header = document.querySelector('.header');
     
-    window.addEventListener('scroll', function() {
-        if (window.scrollY > 50) {
-            header.classList.add('scrolled');
-        } else {
-            header.classList.remove('scrolled');
-        }
-    });
+    if (header) {
+        window.addEventListener('scroll', function() {
+            if (window.scrollY > 50) {
+                header.classList.add('scrolled');
+            } else {
+                header.classList.remove('scrolled');
+            }
+        });
+    }
     
     // Contador para números
     const contadores = document.querySelectorAll('.metric-number');
@@ -107,6 +104,12 @@ document.addEventListener('DOMContentLoaded', function() {
         formulario.addEventListener('submit', function(event) {
             event.preventDefault();
             
+            // Mostrar indicador de carregamento
+            const btnSubmit = formulario.querySelector('.btn-submit');
+            const btnTexto = btnSubmit.innerHTML;
+            btnSubmit.innerHTML = '<i class="fas fa-spinner fa-spin"></i> Enviando...';
+            btnSubmit.disabled = true;
+            
             const formData = new FormData(formulario);
             const url = formulario.getAttribute('action');
             
@@ -120,15 +123,40 @@ document.addEventListener('DOMContentLoaded', function() {
             .then(response => {
                 if (response.ok) {
                     return response.json();
+                } else {
+                    throw new Error('Houve um problema ao enviar o formulário.');
                 }
-                throw new Error('Houve um problema ao enviar o formulário.');
             })
             .then(data => {
-                mensagens.innerHTML = '<div class="form-message success">Mensagem enviada com sucesso! Entraremos em contato em breve.</div>';
+                // Mostrar mensagem de sucesso
+                mensagens.innerHTML = '<div class="form-message">Mensagem enviada com sucesso! Entraremos em contato em breve.</div>';
+                mensagens.className = 'success show';
+                
+                // Resetar o formulário
                 formulario.reset();
+                
+                // Rolar para o topo do formulário
+                formulario.scrollIntoView({ behavior: 'smooth', block: 'start' });
+                
+                // Restaurar o botão após 2 segundos
+                setTimeout(() => {
+                    btnSubmit.innerHTML = btnTexto;
+                    btnSubmit.disabled = false;
+                }, 2000);
             })
             .catch(error => {
-                mensagens.innerHTML = '<div class="form-message error">Houve um erro ao enviar sua mensagem. Por favor, tente novamente.</div>';
+                // Mostrar mensagem de erro
+                mensagens.innerHTML = '<div class="form-message">Houve um erro ao enviar sua mensagem. Por favor, tente novamente.</div>';
+                mensagens.className = 'error show';
+                
+                // Restaurar o botão
+                btnSubmit.innerHTML = btnTexto;
+                btnSubmit.disabled = false;
+                
+                // Rolar para o topo do formulário
+                formulario.scrollIntoView({ behavior: 'smooth', block: 'start' });
+                
+                console.error('Erro ao enviar formulário:', error);
             });
         });
     }
@@ -154,8 +182,8 @@ document.addEventListener('DOMContentLoaded', function() {
             
             e.preventDefault(); // Previne o comportamento padrão somente se tiver um alvo válido
             
-            // Calcula a posição considerando o header fixo
-            const headerHeight = document.querySelector('.header').offsetHeight;
+            // Calcula a posição sem depender do header que pode estar oculto em mobile
+            const headerHeight = 0; // Definindo como zero para evitar problemas com header oculto em mobile
             const offsetTop = targetElement.getBoundingClientRect().top + window.pageYOffset - headerHeight;
             
             window.scrollTo({
@@ -164,9 +192,9 @@ document.addEventListener('DOMContentLoaded', function() {
             });
             
             // Fechar menu mobile se estiver aberto
-            if (nav.classList.contains('active')) {
+            if (nav && nav.classList.contains('active')) {
                 nav.classList.remove('active');
-                menuToggle.classList.remove('active');
+                if (menuToggle) menuToggle.classList.remove('active');
             }
         });
     });
@@ -188,16 +216,10 @@ document.addEventListener('DOMContentLoaded', function() {
     const chatClose = document.getElementById('chatClose');
     if (chatClose) {
         chatClose.addEventListener('click', function() {
-            // Rolar para a próxima seção
-            const casesSection = document.getElementById('cases');
-            if (casesSection) {
-                const headerHeight = document.querySelector('.header').offsetHeight;
-                const offsetTop = casesSection.getBoundingClientRect().top + window.pageYOffset - headerHeight;
-                
-                window.scrollTo({
-                    top: offsetTop,
-                    behavior: 'smooth'
-                });
+            // Apenas fechar o chat, sem rolar para outra seção
+            const rajChat = document.querySelector('.raj-chat');
+            if (rajChat) {
+                rajChat.style.display = 'none';
             }
         });
     }

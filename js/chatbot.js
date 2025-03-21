@@ -458,20 +458,16 @@ if (userInput) {
 
 // Adicionar a mensagem inicial do bot ao chat
 if (chatMessages) {
-    addMessageToChat(messageHistory[0].content, false);
+    console.log('Chat pronto para interação do usuário');
 }
 
 // Inicializar após o DOM estar completamente carregado
 document.addEventListener('DOMContentLoaded', function() {
-    console.log('DOM carregado, inicializando chatbot na nova seção');
+    console.log('DOM carregado');
     
-    // Chamar a função de inicialização
-    initChatbotWithWelcomeMessage();
+    // Removendo a inicialização automática do chatbot para evitar redirecionamento
+    // O chatbot agora será inicializado apenas quando o usuário interagir com os campos
     
-    // Foco inicial no campo de input
-    if (userInput) {
-        setTimeout(() => {
-            userInput.focus();
-        }, 1000);
-    }
+    // Foco inicial no campo de input - também removido para evitar rolagem automática
+    // O foco será dado apenas quando o usuário clicar no campo
 });

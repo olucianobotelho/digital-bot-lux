@@ -12,14 +12,27 @@
     <link href="https://fonts.googleapis.com/css2?family=Playfair+Display:wght@400;500;600;700&family=Montserrat:wght@300;400;500;600;700&display=swap" rel="stylesheet">
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.1/css/all.min.css">
     <link rel="stylesheet" href="https://unpkg.com/aos@next/dist/aos.css" />
-    <script src="https://kit.fontawesome.com/29df5cff14.js" crossorigin="anonymous"></script>
     <!-- Script para prevenir rolagem automática para seções ao carregar a página -->
     <script>
         // Evita rolagem automática para fragmentos na URL quando a página carrega
         window.addEventListener('load', function() {
-            setTimeout(function() {
-                window.scrollTo(0, 0);
-            }, 1);
+            // Força o scroll para o topo da página ao carregar, independente de hash
+            window.scrollTo({
+                top: 0,
+                left: 0,
+                behavior: 'auto'
+            });
+            
+            // Remove qualquer hash da URL para evitar rolagem automática
+            if (window.location.hash) {
+                setTimeout(function() {
+                    // Remove o hash sem recarregar a página
+                    history.replaceState(null, document.title, window.location.pathname + window.location.search);
+                    
+                    // Garante novamente que a página está no topo
+                    window.scrollTo(0, 0);
+                }, 5);
+            }
         });
     </script>
 </head>
@@ -35,7 +48,7 @@
                 <h2>Growth Marketing & Desenvolvimento Web</h2>
                 <p>Transformando ideias em resultados mensuráveis através de estratégias digitais inovadoras</p>
                 <div class="hero-buttons">
-                    <a href="#contato" class="btn-primary">Vamos conversar</a>
+                    <a href="#sobre" class="btn-primary">Vamos conversar</a>
                 </div>
             </div>
         </div>
@@ -209,6 +222,21 @@
                             <i class="fas fa-paper-plane"></i>
                         </button>
                     </div>
+
+                    <script>
+                        // Inicializa o chatbot na primeira interação
+                        document.getElementById('userInput').addEventListener('focus', function() {
+                            if (typeof initChatbotWithWelcomeMessage === 'function' && !window.chatbotInitialized) {
+                                initChatbotWithWelcomeMessage();
+                            }
+                        });
+                        
+                        document.getElementById('sendMessage').addEventListener('click', function() {
+                            if (typeof initChatbotWithWelcomeMessage === 'function' && !window.chatbotInitialized) {
+                                initChatbotWithWelcomeMessage();
+                            }
+                        });
+                    </script>
                 </div>
             </div>
         </div>
@@ -347,7 +375,7 @@
                     </div>
                 </div>
                 <div class="contato-form" data-aos="fade-left">
-                    <form id="contactForm" action="https://formspree.io/f/lucianopaiva3.lpb@gmail.com" method="POST">
+                    <form id="contactForm" action="https://formspree.io/f/xjkyyebj" method="POST">
                         <div id="formMessages"></div>
                         <div class="form-group">
                             <input type="text" id="nome" name="nome" placeholder="Seu nome" required>
@@ -356,13 +384,20 @@
                             <input type="email" id="email" name="email" placeholder="Seu email" required>
                         </div>
                         <div class="form-group">
-                            <input type="text" id="assunto" name="assunto" placeholder="Assunto">
+                            <select id="assunto" name="assunto" required>
+                                <option value="" disabled selected>Selecione o serviço de interesse</option>
+                                <option value="Growth Marketing">Growth Marketing</option>
+                                <option value="Desenvolvimento Web">Desenvolvimento Web</option>
+                                <option value="Marketing de Conteúdo">Marketing de Conteúdo/Gestão de Redes Sociais</option>
+                                <option value="Tráfego Pago">Tráfego Pago</option>
+                                <option value="Soluções com IA">Soluções com IA</option>
+                                <option value="Todos ou mais de 1">Todos ou mais de 1</option>
+                            </select>
                         </div>
                         <div class="form-group">
                             <textarea id="mensagem" name="mensagem" rows="5" placeholder="Sua mensagem" required></textarea>
                         </div>
                         <input type="hidden" name="_subject" value="Novo contato pelo site">
-                        <input type="hidden" name="_next" value="https://lucianobotelho.com/obrigado">
                         <input type="text" name="_gotcha" style="display:none">
                         <button type="submit" class="btn-submit">ENVIAR MENSAGEM</button>
                     </form>
@@ -417,15 +452,19 @@
     <script src="js/chatbot-context.js"></script>
     <script src="js/chatbot.js"></script>
     <script>
-        // Atualizar o script para não procurar mais o chatTrigger
+        // Removendo a inicialização automática do chatbot ao carregar a página
         window.addEventListener('load', function() {
-            console.log('Página totalmente carregada, inicializando chatbot na seção');
-            setTimeout(function() {
-                // Script atualizado para inicializar diretamente o chatbot na seção
-                if (typeof initChatbotWithWelcomeMessage === 'function') {
-                    initChatbotWithWelcomeMessage();
-                }
-            }, 1000);
+            // Forçar scroll para o topo ao carregar a página
+            window.scrollTo(0, 0);
+            
+            // Inicializa AOS (Animate On Scroll)
+            AOS.init({
+                duration: 800,
+                easing: 'ease',
+                once: true,
+                offset: 100,
+                disable: 'mobile'
+            });
         });
     </script>
     <script src="js/calendar-integration.js"></script>

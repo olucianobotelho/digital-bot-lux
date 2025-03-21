@@ -5,12 +5,16 @@
     --bronze-medio: #BF8339;
     --marrom-claro: #D9B07E;
     --marrom-escuro: #401E01;
+    --bronze-escuro: #8B5A2B;
     --branco: #FFFFFF;
     --preto: #000000;
     --cinza-escuro: #333333;
     --cinza-texto: #666666;
     --sombra-padrao: 0 10px 30px rgba(0, 0, 0, 0.08);
     --transicao: all 0.3s ease;
+    --fonte-titulos: 'Playfair Display', serif;
+    --fonte-principal: 'Montserrat', sans-serif;
+    --fonte-secundaria: 'Montserrat', sans-serif;
 }
 
 /* Reset e estilos base */
@@ -1188,7 +1192,7 @@ section {
     }
     
     .hero-content h2 {
-        font-size: 1.1rem;
+        font-size: 1.2rem;
     }
     
     .section-header h2, .section-title {
@@ -1213,6 +1217,23 @@ section {
     
     .metric-number {
         font-size: 2.5rem;
+    }
+
+    .raj-chat {
+        height: 360px;
+    }
+
+    .chat-input-container {
+        padding: 10px 12px;
+    }
+
+    .chat-input {
+        padding: 10px 12px;
+    }
+
+    .chat-send {
+        width: 40px;
+        height: 40px;
     }
 }
 
@@ -1652,29 +1673,30 @@ img[alt="NaN"] {
 }
 
 .form-group input,
-.form-group textarea {
+.form-group textarea,
+.form-group select {
     width: 100%;
-    padding: 15px 20px;
-    border: 1px solid rgba(0, 0, 0, 0.1);
-    border-radius: 10px;
-    background-color: var(--branco);
-    font-size: 15px;
-    color: var(--cinza-escuro);
-    transition: border-color 0.3s ease, box-shadow 0.3s ease;
-    box-shadow: 0 2px 5px rgba(0, 0, 0, 0.03) inset;
+    padding: 12px 15px;
+    border: 1px solid #e0e0e0;
+    border-radius: 5px;
+    margin-bottom: 15px;
+    font-family: 'Montserrat', sans-serif;
+    font-size: 14px;
+    transition: all 0.3s ease;
+    background-color: #f9f9f9;
 }
 
 .form-group input:focus,
-.form-group textarea:focus {
+.form-group textarea:focus,
+.form-group select:focus {
     border-color: var(--bronze-medio);
-    box-shadow: 0 0 0 3px rgba(191, 131, 57, 0.1);
+    box-shadow: 0 0 8px rgba(191, 131, 57, 0.15);
 }
 
 .form-group input::placeholder,
 .form-group textarea::placeholder {
     color: #999;
-    font-size: 14px;
-    transition: all 0.3s ease;
+    transition: var(--transicao);
 }
 
 .form-group input:focus::placeholder,
@@ -1683,6 +1705,24 @@ img[alt="NaN"] {
     transform: translateY(-5px);
 }
 
+/* Estilo específico para o select */
+.form-group select {
+    appearance: none; /* Remove o estilo padrão do navegador */
+    background-image: url('data:image/svg+xml;utf8,<svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="%23BF8339" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M6 9l6 6 6-6"/></svg>');
+    background-repeat: no-repeat;
+    background-position: right 12px center;
+    cursor: pointer;
+}
+
+.form-group select:invalid {
+    color: #999;
+}
+
+.form-group select option {
+    color: #333;
+}
+
+/* Botão de envio do formulário */
 .btn-submit {
     display: inline-block;
     width: 100%;
@@ -1707,24 +1747,31 @@ img[alt="NaN"] {
 
 /* Mensagens de erro/sucesso do formulário */
 #formMessages {
-    padding: 10px;
+    padding: 15px;
     margin-bottom: 20px;
     border-radius: 5px;
-    display: none;
+    transition: all 0.5s ease;
+    opacity: 0;
+    max-height: 0;
+    overflow: hidden;
+}
+
+#formMessages.show {
+    opacity: 1;
+    max-height: 200px;
+    margin-bottom: 20px;
 }
 
 #formMessages.success {
     background-color: rgba(40, 167, 69, 0.1);
     border: 1px solid rgba(40, 167, 69, 0.2);
     color: #28a745;
-    display: block;
 }
 
 #formMessages.error {
     background-color: rgba(220, 53, 69, 0.1);
     border: 1px solid rgba(220, 53, 69, 0.2);
     color: #dc3545;
-    display: block;
 }
 
 @media (max-width: 992px) {
@@ -1744,7 +1791,8 @@ img[alt="NaN"] {
     }
     
     .form-group input,
-    .form-group textarea {
+    .form-group textarea,
+    .form-group select {
         padding: 12px 15px;
         font-size: 14px;
     }
@@ -1881,10 +1929,6 @@ img[alt="NaN"] {
     .footer-col h3::after {
         left: 50%;
         transform: translateX(-50%);
-    }
-    
-    .social-links {
-        justify-content: center;
     }
     
     .main-cta .btn-whatsapp {
@@ -2059,14 +2103,15 @@ img[alt="NaN"] {
 
 .raj-chat {
     flex: 1;
-    min-width: 350px;
+    min-width: 400px;
     border-radius: 15px;
     overflow: hidden;
     box-shadow: 0 10px 30px rgba(0, 0, 0, 0.1);
     display: flex;
     flex-direction: column;
     background-color: #fff;
-    height: 450px;
+    height: 550px;
+    transition: height 0.3s ease, width 0.3s ease;
 }
 
 .raj-chat .chatbot-header {
@@ -2100,6 +2145,7 @@ img[alt="NaN"] {
     flex-direction: column;
     gap: 15px;
     background-color: #f9f9f9;
+    min-height: 350px;
 }
 
 /* Estilo para as mensagens */
@@ -2147,19 +2193,21 @@ img[alt="NaN"] {
 
 .chat-input-container {
     display: flex;
-    padding: 10px 15px;
+    padding: 15px 18px;
     background-color: #fff;
     border-top: 1px solid #eaeaea;
+    align-items: center;
 }
 
 .chat-input {
     flex: 1;
     border: 1px solid #e0e0e0;
     border-radius: 30px;
-    padding: 10px 15px;
-    font-size: 14px;
+    padding: 12px 18px;
+    font-size: 15px;
     outline: none;
     transition: border-color 0.3s;
+    height: 48px;
 }
 
 .chat-input:focus {
@@ -2258,7 +2306,7 @@ img[alt="NaN"] {
     }
     
     .raj-chat {
-        height: 400px;
+        height: 550px;
     }
     
     .raj-info {
@@ -2276,8 +2324,9 @@ img[alt="NaN"] {
     }
     
     .raj-chat {
-        height: 350px;
-        min-width: unset;
+        height: 600px;
+        min-width: 100%;
+        width: 100%;
     }
     
     .raj-info h3 {
@@ -2288,23 +2337,88 @@ img[alt="NaN"] {
         font-size: 14px;
     }
     
+    .message {
+        margin-bottom: 18px;
+    }
+    
     .message-content {
         max-width: 90%;
-        padding: 10px 12px;
+        padding: 12px 16px;
+        box-shadow: 0 3px 10px rgba(0, 0, 0, 0.1);
     }
     
     .message-content p {
-        font-size: 13px;
+        font-size: 15px;
+        line-height: 1.5;
+    }
+    
+    .message.user .message-content {
+        background: linear-gradient(135deg, var(--bronze-medio), var(--marrom-claro));
     }
     
     .chat-input {
-        padding: 8px 12px;
-        font-size: 13px;
+        width: 100%;
+        padding: 12px 15px;
+        font-size: 15px;
     }
     
     .chat-send {
-        width: 36px;
-        height: 36px;
+        width: 44px;
+        height: 44px;
+    }
+}
+
+/* Ajuste específico para iPhone 12 e dispositivos similares */
+@media (max-width: 428px) {
+    .raj-chat {
+        height: 600px;
+        min-width: 100%;
+    }
+    
+    .chat-input-container {
+        padding: 12px 15px;
+    }
+    
+    .chat-input {
+        width: 100%;
+        padding: 12px 15px;
+        font-size: 16px;
+    }
+    
+    .chat-send {
+        width: 46px;
+        height: 46px;
+    }
+    
+    .chatbot-header {
+        padding: 15px 20px;
+    }
+    
+    .raj-chat .chatbot-header h3 {
+        font-size: 18px;
+    }
+    
+    .raj-chat .chatbot-header p {
+        font-size: 14px;
+    }
+}
+
+@media (max-width: 370px) {
+    .raj-chat {
+        height: 550px;
+    }
+    
+    .chat-messages {
+        padding: 15px;
+        height: auto;
+    }
+    
+    .message-content {
+        padding: 10px;
+    }
+    
+    .message-content p {
+        font-size: 14px;
     }
 }
 
@@ -2511,4 +2625,16 @@ img[alt="NaN"] {
     background-color: var(--bronze-medio);
     color: white;
     box-shadow: 0 8px 20px rgba(191, 131, 57, 0.3);
+}
+
+@media (max-width: 576px) {
+    .message-content {
+        max-width: 90%;
+        padding: 12px 15px;
+    }
+    
+    .message-content p {
+        font-size: 15px;
+        line-height: 1.6;
+    }
 } 
