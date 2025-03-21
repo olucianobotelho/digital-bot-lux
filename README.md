@@ -112,4 +112,4 @@ Todos os direitos reservados.
 
 ---
 
-Desenvolvido com ❤️ para Luciano Botelho
+Desenvolvido com ❤️ por Luciano Botelho
