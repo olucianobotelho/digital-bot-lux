@@ -1,9 +1,0 @@
-leia todo codigo, idendifique inconsistencias e corrija-aos
-garanta que todas as funcionalidades estejam em conformidade
-verifique novamente todo codigo
-crie um check-list dessas verificaçoes para garantir as funcionalidades
-garantir que a esrtutura visual esteja correta
-garantir que a pontuaçao nao fique bugada no site criando uma falsa pontuaçao
-corrija cliques falsos e pontuaçoes falsas, modais desconfigurados
-garanta que cada objeto novo clicado o usuario ganhe 9 pontos
-botoes desalinhados

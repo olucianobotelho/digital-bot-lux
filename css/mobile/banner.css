@@ -1,0 +1,60 @@
+/* Banner específico para dispositivos móveis */
+
+/* Dimensões recomendadas para o banner mobile:
+   - Largura: 768px
+   - Altura: 1024px a 1200px 
+   - Proporção ideal: 3:4 ou 9:16
+   - Formato: JPG ou PNG otimizado para web
+   - Tamanho do arquivo: Máximo 200KB
+*/
+
+/* Estilos para o banner mobile */
+@media (max-width: 768px) {
+    .hero {
+        background-image: url('../../images/background-mobile.png') !important;
+        background-size: cover !important;
+        background-position: center top !important;
+        align-items: flex-start !important;
+        padding-top: 40% !important; /* Posiciona o content-hero 40% abaixo do topo */
+    }
+    
+    .hero-content {
+        width: 90% !important;
+        margin: 0 auto !important;
+        margin-top: 150px !important;
+        padding: 30px 20px !important;
+        text-align: center !important;
+    }
+}
+
+/* Ajustes para telas muito pequenas */
+@media (max-width: 576px) {
+    .hero {
+        padding-top: 45% !important; /* Ainda mais para baixo em telas menores */
+        background-position: center 30% !important; /* Centraliza o rosto na imagem */
+    }
+    
+    .hero-content {
+        width: 95% !important;
+        padding: 25px 15px !important;
+    }
+}
+
+/* Ajustes para telas extra pequenas */
+@media (max-width: 375px) {
+    .hero {
+        padding-top: 50% !important; /* Máximo para baixo em telas muito pequenas */
+    }
+    
+    .hero-content {
+        padding: 20px 10px !important;
+    }
+    
+    .hero-content h1 {
+        font-size: 2rem !important;
+    }
+    
+    .hero-content h2 {
+        font-size: 1.2rem !important;
+    }
+} 
